@@ -3,15 +3,65 @@ name: Super-Linter
 on: push
 
 jobs:
-  super-lint:
-    name: Lint code base
+  build:
+    name: Build artifact and upload to "holding area"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build artifact
+        run: |
+          # Coloca aquí los comandos necesarios para construir tu artefacto
+          # Por ejemplo, si es un proyecto Node.js:
+          # npm install
+          # npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: path/to/artifact
+
+  security-check:
+    name: Check dependencies for security issues
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check dependencies for security issues
+        run: |
+          # Coloca aquí los comandos para revisar las dependencias en busca de problemas de seguridad
+          # Por ejemplo, si es un proyecto Node.js:
+          # npm audit
+
+  unit-tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run unit tests
+        run: |
+          # Coloca aquí los comandos para ejecutar tus pruebas unitarias
+          # Por ejemplo, si es un proyecto Python con pytest:
+          # pytest
+
+  lint:
+    name: Check coding style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check coding style
+        run: |
+          # Coloca aquí los comandos para verificar el estilo de codificación
+          # Por ejemplo, si es un proyecto Python con flake8:
+          # flake8
+
+  static-analysis:
+    name: Run static analysis
+    runs-on: ubuntu-la
